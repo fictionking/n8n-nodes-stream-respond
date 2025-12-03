@@ -15,7 +15,7 @@ export class StreamRespond implements INodeType {
 		version: 1,
 		description: 'Streams data to a Stream Trigger with a specific event type',
 		defaults: {
-			name: 'Stream Response',
+			name: 'Stream Respond',
 		},
 		inputs: ['main'],
 		outputs: ['main'],
