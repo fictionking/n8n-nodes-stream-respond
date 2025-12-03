@@ -2,6 +2,11 @@
 # n8n-nodes-stream-respond
 ![Stream Respond Node](icons/icon.png)
 这个 n8n 社区节点包提供了 Stream Respond 节点，允许你在 n8n 工作流中实现流式响应功能，将数据流式传输到 Stream Trigger。
+![](icons/sc1.jpg)
+![](icons/sc2.jpg)
+![](icons/sc5.png)
+![](icons/sc3.jpg)
+![](icons/sc4.jpg)
 
 ## 功能特性
 
@@ -104,7 +109,7 @@ n8n start --dev
 
 ### 示例 2：发送单个流事件
 
-1. 添加一个 Stream Trigger 节点
+1. 添加一个 Webhook Trigger 节点,配置为Streaming模式
 2. 添加一个 Code 节点，生成单个数据项
 3. 添加 Stream Respond 节点，设置：
    - Chunk Type：`Item`
