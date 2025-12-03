@@ -1,5 +1,6 @@
-# n8n-nodes-stream-respond
 
+# n8n-nodes-stream-respond
+![Stream Respond Node](icons/icon.png)
 这个 n8n 社区节点包提供了 Stream Respond 节点，允许你在 n8n 工作流中实现流式响应功能，将数据流式传输到 Stream Trigger。
 
 ## 功能特性
