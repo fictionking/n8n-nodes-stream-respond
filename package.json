@@ -1,0 +1,56 @@
+{
+  "name": "@fictionking/n8n-nodes-stream-respond",
+  "version": "0.1.0",
+  "description": "Stream Respond node for n8n with Stream Model support",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n-nodes",
+    "langchain",
+    "ai",
+    "stream-respond",
+    "stream-model",
+    "stream-chat-message"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "fictionking",
+    "email": "fictionking@hotmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fictionking/n8n-nodes-stream-respond.git"
+  },
+  "main": "index.js",
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/StreamRespond/StreamRespond.node.js"
+    ]
+  },
+  "scripts": {
+    "build": "npm run clean && tsc && npm run copy-files",
+    "dev": "tsc --watch",
+    "copy-files": "copyfiles -u 0 icons/**/* dist/ && copyfiles -u 1 nodes/**/*.json dist/",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "clean": "rimraf dist"
+  },
+  "files": [
+    "dist",
+    "index.js",
+    "package.json",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "copyfiles": "^2.4.1",
+    "n8n-workflow": "*",
+    "rimraf": "^5.0.0",
+    "tslint": "^6.1.2",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+  }
+}
