@@ -12,6 +12,7 @@
 
 - **多种 Chunk 类型**：支持发送不同类型的流事件（完整流、单个项目、开始事件、结束事件、错误事件）
 - **完整流模式**：一键发送完整的流序列（begin + 所有items + end）
+- **智能内容处理**：自动检测Item Content是否为表达式，若是固定值则仅发送一次，避免重复发送
 - **灵活的内容配置**：为每种流事件类型配置自定义内容
 - **延迟控制**：可设置发送每个流事件后的延迟时间
 - **版本兼容性检查**：自动检查 n8n 版本是否支持流式功能
@@ -33,7 +34,7 @@
   - `End`：指示流的结束
   - `Error`：向聊天发送错误事件
 - **Begin Content**：为开始事件定义字符串内容（仅在 Complete 或 Begin 模式下可见）
-- **Item Content**：为每个项目块定义字符串内容（仅在 Complete 或 Item 模式下可见）
+- **Item Content**：为每个项目块定义字符串内容（仅在 Complete 或 Item 模式下可见）。如果内容是固定值（非表达式），将仅发送一次；如果是表达式（以`=`开头），则为每个输入数据项发送一次
 - **End Content**：为结束事件定义字符串内容（仅在 Complete 或 End 模式下可见）
 - **Error Content**：为错误事件定义字符串内容（仅在 Error 模式下可见）
 - **Delay (ms)**：发送每个块后的等待时间
@@ -134,7 +135,7 @@ n8n start --dev
 根据选择的 Chunk Type，节点会显示对应的 Content 字段：
 
 - **Begin Content**：begin 事件的内容
-- **Item Content**：item 事件的内容，可使用 n8n 表达式（如 `{{$json.field}}`）
+- **Item Content**：item 事件的内容，可使用 n8n 表达式（如 `{{$json.field}}`）。智能处理：如果是固定值将仅发送一次，表达式则为每个项目发送一次
 - **End Content**：end 事件的内容
 - **Error Content**：error 事件的内容
 

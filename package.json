@@ -1,6 +1,6 @@
 {
   "name": "@fictionking/n8n-nodes-stream-respond",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Stream Respond node for n8n with Stream Model support",
   "keywords": [
     "n8n-community-node-package",

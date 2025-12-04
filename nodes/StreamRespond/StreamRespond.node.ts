@@ -120,7 +120,7 @@ export class StreamRespond implements INodeType {
 			const contentParamMap: Record<string, string> = {
 				begin: 'beginContent',
 				end: 'endContent',
-				error: 'errorContent',
+			error: 'errorContent',
 				item: 'itemContent'
 			};
 			
@@ -132,6 +132,19 @@ export class StreamRespond implements INodeType {
 			} catch (error) {
 				// 如果获取失败，返回空字符串
 				return '';
+			}
+		};
+
+		// 检查参数是否是表达式的辅助函数
+		const isExpression = (paramName: string): boolean => {
+			try {
+				// 获取原始参数值，不解析表达式
+				const rawValue = this.getNodeParameter(paramName, 0, '', { rawExpressions: true }) as string;
+				// 在 n8n 中，表达式通常以 = 开头
+				return rawValue.trim().startsWith('=');
+			} catch (error) {
+				// 如果获取失败，默认认为是表达式
+				return true;
 			}
 		};
 		
@@ -149,16 +162,35 @@ export class StreamRespond implements INodeType {
 		
 		// 处理所有 items 的辅助函数
 		const processItems = async () => {
-			for (let i = 0; i < items.length; i++) {
+			// 检查 itemContent 是否是表达式
+			const itemContentIsExpression = isExpression('itemContent');
+			
+			if (itemContentIsExpression) {
+				// 如果是表达式，需要为每个 item 生成不同的 payload
+				for (let i = 0; i < items.length; i++) {
+					try {
+						// 构建 item payload
+						const itemPayload = buildPayload('item', i);
+						await sendChunkWithDelay('item', i, itemPayload);
+					} catch (error) {
+						if (this.continueOnFail()) {
+							continue;
+						}
+						throw error;
+					}
+				}
+			} else {
+				// 如果是固定值，只需要发送一次
 				try {
-					// 构建 item payload
-					const itemPayload = buildPayload('item', i);
-					await sendChunkWithDelay('item', i, itemPayload);
+					// 构建 item payload (使用第一个 item 的索引)
+					const itemPayload = buildPayload('item', 0);
+					await sendChunkWithDelay('item', 0, itemPayload);
 				} catch (error) {
 					if (this.continueOnFail()) {
-						continue;
+						// 继续执行，但不处理错误
+					} else {
+						throw error;
 					}
-					throw error;
 				}
 			}
 		};
